@@ -1,2 +1,2 @@
 # datasciencecoursera
-JP's repository for coursera datascience course
+jvanstee's repository for coursera datascience course
