@@ -1,0 +1,292 @@
+c(43,42,12,8,5)
+myFamilyAges <- c(43,42,12,8,5)
+myFamilyAges
+sum(myFamilyAges)
+mean(myFamilyAges)
+range(myFamilyAges)
+myRange <- range(myFamilyAges)
+myRange
+myFamilyNames <- c("Dad","Mom","Sis","Bro","Dog")
+myFamilyNames
+myFamilyAges <- c(43,42,12,8,5)
+myFamilyAges
+myFamilyGenders <- c("Male","Female","Female","Male","Female")
+myFamilyGenders
+myFamilyWeights <- c(188,136,83,61,44)
+myFamilyWeights
+myFamily <- data.frame(myFamilyNames, myFamilyAges, myFamilyGenders, myFamilyWeights)
+myFamily
+str (myFamily)
+summary (myFamily)
+read.table(pipe("pbpaste"))
+USstatePops <- read.Dif("clipboard",transpose=TRUE)
+USstatePops <- read.table(pipe("pbtaste"))
+USstatePops <- read.table(pipe("pbpaste"))
+“USstatePops <- read.table(pipe("pbpaste"))”#
+#
+Excerpt From: Jeffrey M. Stanton. “Introduction to Data Science.” Jeff Stanton, 2013. iBooks. https://itun.es/us/_5tIF.l
+USstatePops <- read.table(pipe("pbpaste"))#
+#
+Excerpt From: Jeffrey M. Stanton. “Introduction to Data Science.” Jeff Stanton, 2013. iBooks. https://itun.es/us/_5tIF.l
+USstatePops <- read.table(pipe("pbpaste"))
+47797357102316392013291592137253956502919635740978979346017231880131196876601360301156758212830632648380030463502853118433936245333721328361577355265476299883635530392529672975988927989415182634127005511316472879189420591801937810495354756725911153650237513543831074127023791052567462536481418063461102514556127638856257418001030672454018529965686986563626
+Read.table(pipe{"pbpaste"})
+read.table(pipe("pbpaste"))
+USstatePops <-read.table(pipe("pbpaste"))
+USstatePops
+mean(USstatePops$V1)
+median(USstatePops$V1)
+hist(USstatePops$V1)
+sample(USstatePops$V1, size=16, replace=TRUE)
+mean(sample(USstatePops$V1,size=16,replace=TRUE))
+replicate(4,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE)
+mean(replicate(400,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE)
+)
+mean(replicate(4000,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE))
+hist(replicate(400,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE))
+hist(replicate(4000,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE))
+SampleMeans <-replicate(400,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE)
+length(SampleMeans)
+SampleMeans <- replicate(10000,mean(sample(USstatePops$V1,size=16,replace=TRUE)),simplify=TRUE)
+SampleMeans
+mean(SampleMeans)
+hist(SampleMeans)
+c(19,23,25,52,60)
+familyages <- c(19,23,25,52,60)
+familyages
+mean(familyages)
+range(familyages)
+familynames <-c("Kurt","Sofie","Catherine","Cindy","Jean-Pierre")
+familynames
+familygender <-c(M,F,F,F,M)
+familygender
+familygender <-("M","F","F","F","M")
+familygender <-c("M","F","F","F","M")
+myfamily <-data.fram(familynames,familyages,familygender)
+myfamily <-data.frame(familynames,familyages,familygender)
+myfamily
+str(myfamily)
+summary(myfamily)
+myfamily$familynames
+familyages <-c(familyages, 11)
+familyages
+myfamily$myfamilyages
+myfamily$familyages
+myfamily$familyages<-c(myfamily$familyages, 11)
+var(myfamily$familyages)
+sd(mayfamily$familyages)
+sd(myfamily$familyages)
+read.table(pipe("pbpaste"))
+read.table(pipe("pbpast"))
+usstatepops<-read.DIF("clipboard",transpose=TRUE)
+usstatepops<-read.table(pipe("pbpaste"))
+usstatepops
+str(usstatepops)
+mean(usstatepops)
+mean(usstatepops$v1)
+mean(usstatepops$V1)
+median(usstateops$V1)
+median(usstatepops$V1)
+mode(usstatepops$V1)
+var(usstatepops$V1)
+sd(usstatepops$V1)
+hist(usstatepops$V1)
+hist(usstatepops$V1,breaks=20)
+sample(usstatespops$V1,size=16,replace=true)
+sample(usstatepops$V1,size=16,replace=true)
+usstatepops$V1
+sample(usstatepops$V1,size=16,replace=TRUE)
+mean(sample(usstatepops$V1,size=16,replace=TRUE))
+replicate(4,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE)
+mean(replicate(400mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE))
+mean(replicate(400,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE))
+mean(replicate(4000,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE))
+hist(mean(replicate(4000,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE)))
+hist(replicate(4000,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE))
+replicate(10000,mean(sample(usstatepops$V1,size=5,replace=TRUE)),simplify=TRUE)
+samplemeans <-replicate(4000,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE)
+samplemenas
+samplemeans
+samplemeans <-replicate(10000,mean(sample(usstatepops$V1,size=16,replace=TRUE)),simplify=TRUE)
+length(samplemeans)
+mean(samplemeans)
+hist(samplemeans)
+summary(samplemeans)
+quantile(samplemeans,probs=c(0.25,.50,0.75))
+sd(samplemeans)
+myfamily
+install.packages(KernSmooth)
+available.packages
+available.packages()
+install.packages("KernSmooth")
+library(KernSmooth)
+swirl()
+libray(swirl)
+install.packages("swirl")
+library(swirl)
+install_from_swirl("R programming")
+install_from_swirl("R Programming")
+swirl()
+Sys.Date()
+mean(c(2,4,5))
+submit(x)
+boring_function <- function(x) {#
+ 	x#
+}
+submit(x)
+submit()
+boring_function('My first function!')
+boring_function()
+boring_function
+boring_function <- function(x) {#
+ 	x#
+}#
+submit()
+my_mean <- function(my_vector) {#
+  sum(my_vector)/length(my_vector)#
+}
+submit()
+my_vector <-c(1:10)
+my_mean(my_vector)
+my_vector <-c(1,2,3,4,5)
+my_mean(my_vector)
+skip()
+my_mean(c(4,5,10))
+remainder <- function(num, divisor=2) {#
+  num%%divisor}
+submit()
+remainder(5)
+remainder <- function(num, divisor=2) {#
+  num%%divisor#
+  }
+submit
+submit()
+remainder(5)
+skip()
+remainder <- function(num, divisor = 2) {#
+  # Write your code here!#
+  # Remember: the last expression evaluated will be returned! #
+  num %% divisor
+}
+remainder(5)
+remainder(11,5)
+remainder(divisor = 11, num = 5)
+remainder(4, div = 2)
+args(remainder)
+sum <- function(x){#
+	sum(c)#
+}#
+median <- function(x){#
+	median(c)#
+}#
+floor <- function (x){#
+	floor(c)#
+}#
+#
+evaluate <- function(func, dat){#
+  # Write your code here!#
+  # Remember: the last expression evaluated will be returned! #
+  func(c)#
+}
+submit()
+evaluate(median, c(7, 40, 9))
+skip()
+sum <- function(x){#
+	sum(c)#
+}#
+median <- function(x){#
+	median(c)#
+}#
+floor <- function (x){#
+	floor(c)#
+}#
+#
+evaluate <- function(func, dat){#
+  # Write your code here!#
+  # Remember: the last expression evaluated will be returned! #
+  func(c)#
+}
+submit()
+evaluate(sum, c(2,4,6))
+evaluate(sum, c(2, 4, 6))
+skip()
+next()
+break()
+skip()
+evaluate <- function(func, dat){#
+  func(c)#
+}
+evaluat(sum,c2,4,6)
+evaluate(sum,c2,4,6)
+evaluate <- function(func, data){}
+skip()
+evaluate <- function(func, dat){#
+  func(c(2,4,6))#
+}
+evaluate(sum,c(2,4,6))
+bye()
+swirl()
+submit()
+evaluate <- function(func, dat){#
+  # Write your code here!#
+  # Remember: the last expression evaluated will be returned! #
+  func(c(2,4,6))#
+}
+evaluate(sum,c(2,4,6))
+?
+submit()
+evaluate <- function(func, dat){#
+  # Write your code here!#
+  # Remember: the last expression evaluated will be returned! #
+  func(c(2,4,6))#
+}
+submit()
+evaluate <- function(func, dat){#
+  # Write your code here!#
+  # Remember: the last expression evaluated will be returned! #
+  func(c(2,4,6))#
+}
+skip()
+pollutantmean <- function(directory, pollutant, id = 1:332) {}
+data <- read.csv("1.csv")
+getwd()
+ls
+ls()
+ls()
+data <- read_csv("1.csv")
+read.csv("1.csv")
+data <- read_csv("specdata/1.csv")
+data <- read.csv("specdata/1.csv")
+cube <- function(x,n) {x^3}
+cube(3)
+x <- 1:10#
+if(x > 5) {#
+  x <- 0#
+}
+f <- function(x) {#
+        g <- function(y) {#
+                y + z#
+        }#
+        z <- 4#
+        x + g(x)#
+}
+z <- 10#
+f(3)
+x <- 5#
+y <- if(x < 3) {#
+        NA#
+} else {#
+        10#
+}
+x <- 5#
+y <- if(x < 3) {#
+        NA#
+} else {#
+        10#
+}
+x <-5
+x
+y <- if(x<3) {NA}
+y
+y <- if(x<3) {NA} else {10}
+y
