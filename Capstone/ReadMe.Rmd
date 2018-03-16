@@ -5,13 +5,10 @@ date: "3/16/2018"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## Document repository for Coursera Data Science Specialization - Capstone project
 
-###This github repository contains the documentation for the Capstone project:
+### This github repository contains the documentation for the Capstone project:
 
 1. Load-Data.R contains the script to load the blog, news and twitter data into R
 2. Cleaning data.R contains the script to clean and better understand the data
