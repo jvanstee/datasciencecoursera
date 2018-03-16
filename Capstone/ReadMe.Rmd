@@ -1,0 +1,29 @@
+---
+title: "ReadMe"
+author: "JP Van Steerteghem"
+date: "3/16/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Document repository for Coursera Data Science Specialization - Capstone project
+
+###This github repository contains the documentation for the Capstone project:
+
+1. Load-Data.R contains the script to load the blog, news and twitter data into R
+2. Cleaning data.R contains the script to clean and better understand the data
+3. corpusv4.R contains the script to create the language model
+4. week2_progress_reportv3.Rmd is the markdown file containing the week2 progress report
+5. PNW contains:
+- Predict_Next_Word_presentation which is posted in Rpubs
+- app.R is the shiny app
+- predictv4.R is the next_word_prediction algorithm
+- data contains the language model, ngram_models.rds
+
+The link to the shiny app: https://jvanstee.shinyapps.io/predict_next_word2/
+
+The link to the Rpubs presentation: https://github.com/jvanstee/datasciencecoursera/tree/master/Capstone
+
