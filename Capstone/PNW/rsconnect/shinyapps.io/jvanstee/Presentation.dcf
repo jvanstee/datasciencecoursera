@@ -1,0 +1,12 @@
+name: Presentation
+title: PNW
+username:
+account: jvanstee
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 297810
+bundleId: 1264678
+url: https://jvanstee.shinyapps.io/Presentation/
+when: 1520872758.78661
+asMultiple: FALSE
+asStatic: FALSE

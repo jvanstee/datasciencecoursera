@@ -1,0 +1,12 @@
+name: predict_next_word
+title: Predict_Next_Word
+username:
+account: jvanstee
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 293934
+bundleId: 1254317
+url: https://jvanstee.shinyapps.io/predict_next_word/
+when: 1520307352.74154
+asMultiple: FALSE
+asStatic: FALSE

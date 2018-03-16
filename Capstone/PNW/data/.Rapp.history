@@ -1,0 +1,2 @@
+load("/Users/jvanstee/datasciencecoursera/Capstone/Capstone/data/ngram_models.rds")
+load("/Users/jvanstee/datasciencecoursera/Capstone/PNW/data/ngram_models.rds")

@@ -1,0 +1,276 @@
+---
+title: "Capstone Week2"
+author: "JP Van Steerteghem"
+date: "2/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Capstone Week 2 progress report
+## 1.Introduction
+The purpose of the Capstone project is to build a "smart" keyboard that makes it easier for people to type on their mobile devices. One cornerstone of a "smart"" keyboard is predictive text models.  When someone types "I went to the", the keyboard presents three options for what the next word might be. For example, the three words might be gym, store, restaurant. 
+In this capstone we work on understanding and building predictive text models like those used by our corporate partner SwiftKey.
+**The code has been suppressed and was moved to the appendix to maintain readability of this document.
+## 2.Requirements
+For the Capsone we need to consider the following requirements.
+
+1. we need to ensure that it runs in the amount of RAM you have on your computer to build the models.  In my case it will run on a MacBook Pro with 8GB of memory.  
+
+2. we need to ensure that our Shiny app will run in less than the 1Gb free version of Shiny.
+
+3. one must consider the load time for the application. You don't want to keep your users waiting too long for your app to start.
+
+The above requirements are actually very realistic in practice, since current available predictive text models run on mobile phones, which typically have limited memory and processing power compared to desktop computers. 
+
+
+## 3. Loading the r packages
+- "dtplyr" implements the data table back-end for 'dplyr' so that you can seamlessly use data table and 'dplyr' together.
+- "stringi" allows for fast, correct, consistent, portable, as well as convenient character string/text processing in every locale and any native encoding
+- "kableExtra" onstructs Complex Table with 'kable' and Pipe Syntax 
+- "quanteda" is a fast, flexible, and comprehensive framework for quantitative text analysis in R. 
+- "readtext" for Import and Handling for Plain and Formatted Text Files.
+- "ggplot2" is a plotting system for R
+```{r packages, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+# Used packages.
+# dtplyr implements the data table back-end for 'dplyr' so that you can seamlessly use data table and 'dplyr' together.
+# stringi allows for fast, correct, consistent, portable, as well as convenient character string/text processing in every locale and any native encoding
+# kableExtra onstructs Complex Table with 'kable' and Pipe Syntax 
+# quanteda is a fast, flexible, and comprehensive framework for quantitative text analysis in R. 
+# readtext for Import and Handling for Plain and Formatted Text Files.
+# ggplot2 is a plotting system for R
+library(dtplyr)
+library(stringi)
+library(knitr)
+library(kableExtra)
+library(quanteda)
+library(readtext)
+library(ggplot2)
+```
+
+## 4. Loading and cleaning the data
+Load the data from the coursera website [Capstone Dataset](https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip) The goal of this task is to get familiar with the databases and do the necessary cleaning. 
+```{r loaddata, echo=FALSE, cache=TRUE}
+# set working directory
+setwd("~/datasciencecoursera")
+
+# Downloading Capstone dataset
+#if(!file.exists("./Capstone")){dir.create("./Capstone")}
+#fileUrl <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
+#download.file(fileUrl,destfile="./Capstone/Capstone Dataset.zip")
+
+# Unzip Capstone Dataset to ./Capstone directory
+#unzip(zipfile="./Capstone/Capstone Dataset.zip",exdir="./Capstone")
+```
+
+- First we get an idea of the size of the Corpora.  We determine the file size of each text file in the Corpora (en_US.blogs.txt, en_US.news.txt, n_US.twitter.txt).  
+
+- Then we uplaod each file and we count the number of lines in each text file.  
+
+- Finally we determine the number of words in each file.
+
+``` {r file information, echo=FALSE, cache=TRUE}
+## Determine filesizes in Millions
+blogssize<-file.size("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.blogs.txt")/1024^2
+
+newssize<-file.size("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.news.txt")/1024^2
+
+twittersize<-file.size("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.twitter.txt")/1024^2
+
+##Read files
+con <- file("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.blogs.txt")
+blogs <- readLines(con)
+close(con)
+
+con <- file("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.news.txt")
+news <- readLines(con)
+close(con)
+
+con <- file("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.twitter.txt")
+twitter <- readLines(con, skipNul = TRUE)
+close(con)
+
+
+# Numbers of lines in the files in Millions
+blogslength<-length(blogs)/1024^2
+
+newslength<-length(news)/1024^2
+
+twitterlength<-length(twitter)/1024^2
+
+
+# Number of words in each file in Millions
+blogswords <-sum(stri_count_words(blogs))/1024^2
+
+newswords <-sum(stri_count_words(news))/1024^2
+
+twitterwords <-sum(stri_count_words(twitter))/1024^2
+```
+The table below shows size, length and numbers for each of the files in Millions.  
+```{r, echo=FALSE, results="asis"}
+table <- data.frame(file = c("USblogs", "USnews", "US twitter"), size = c(blogssize,newssize,twittersize),
+                    length  = c(blogslength,newslength,twitterlength), words = c(blogswords,newswords,twitterwords))
+table %>% kable("html") %>% kable_styling()
+```
+
+
+As you can tell each file is enormous in size.  We can not use all the data for this project as it would require more compute power and memory than we have.  Therefore we take an initial subset of 5% of the data.  
+
+## 5. Exploratory Analysis
+
+We upload a 5% subset of the data as our training data set.  Depending on how our prediction model performs we may decide to tweak this number up or down.
+```{r, echo=FALSE, cache = TRUE}
+#determine the number of lines to sample in each file
+sample <- .05  # we're going with a sample containing 5% of the texts
+
+##Read a sample English training data
+con <- file("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.blogs.txt")
+blogs_sample <- readLines(con,blogslength*1024^2*sample)
+close(con)
+
+con <- file("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.news.txt")
+news_sample <- readLines(con,newslength*1024^2*sample)
+close(con)
+
+con <- file("/Users/jvanstee/datasciencecoursera/Capstone/final/en_US/en_US.twitter.txt")
+twitter_sample <- readLines(con, twitterlength*1024^2*sample,skipNul = TRUE)
+close(con)
+
+sample <- c(blogs_sample,news_sample,twitter_sample)
+```
+
+To build a predictive model for text we need to understand the distribution and relationship between the words, tokens, and phrases in the text. 
+
+- We do profanity filtering. We remove profanity and other words we do not want to predict.  We've downloaded a "Terms to Block" - file from [Frontgate media](https://www.frontgatemedia.com/a-list-of-723-bad-words-to-blacklist-and-how-to-use-facebooks-moderation-tool/) for this purpose.
+
+- We use "Quanteda" a text analytics package which provides a rich set of text analysis features coupled with excellent performance relative to Java-based R packages for text analysis. 
+
+- We remove punctuations, numbers, separators and English stopwords.
+
+- We create unigrams, bigrams and trigrams.  
+
+###5.1 ngram frequency graphs
+The following graphs show the top20 unigrams, bigrams, trigrams.
+```{r, echo=FALSE, cache = TRUE, message=FALSE, warning=FALSE}
+# read file with profanity words that we want to remove from the corpus
+profanity <- readLines(file("/Users/jvanstee/datasciencecoursera/Capstone/Terms-to-Block.csv",encoding = "UTF-8"),encoding = "UTF-8")
+
+# build a corpus with quanteda
+mycorpus <- corpus(sample)
+
+mycorpus_tokenized <- tokens(mycorpus,remove_punct = TRUE, remove_numbers = TRUE, remove_separators = TRUE, what = "word")
+
+# create ngrams
+ngram1 <- tokens_ngrams(mycorpus_tokenized, n = 1, skip = 0L)
+ngram2 <- tokens_ngrams(mycorpus_tokenized, n = 2, skip = 0L, concatenator = " ")
+ngram3 <- tokens_ngrams(mycorpus_tokenized, n = 3, skip = 0L, concatenator = " ")
+
+dfm_ngram1<-dfm(ngram1, remove = c(profanity,stopwords('english'))) # remove english stopwords and profanity
+ngram1_freq <- textstat_frequency(dfm_ngram1)
+ggplot(ngram1_freq[1:20, ], aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_point() +
+  coord_flip() +
+  labs(x = NULL, y = "Unigram Frequency")
+
+dfm_ngram2<-dfm(ngram2, remove = c(profanity,stopwords('english')))
+ngram2_freq <- textstat_frequency(dfm_ngram2)
+ggplot(ngram2_freq[1:20, ], aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_point() +
+  coord_flip() +
+  labs(x = NULL, y = "Bigram Frequency")
+
+dfm_ngram3 <- dfm(ngram3, remove = c(profanity,stopwords('english')))
+ngram3_freq <- textstat_frequency(dfm_ngram3)
+ggplot(ngram3_freq[1:20, ], aes(x = reorder(feature, frequency), y = frequency)) +
+  geom_point() +
+  coord_flip() +
+  labs(x = NULL, y = "Trigram Frequency")
+
+```
+
+###5.2 Removing singletons
+```{r, echo=FALSE, cache=TRUE}
+#convert to dataframe
+ngram1 <- as.data.frame(ngram1_freq)
+ngram2 <- as.data.frame(ngram2_freq)
+ngram3 <- as.data.frame(ngram3_freq)
+
+#determine unique number of uni-. bi- and tri-grams
+unigrams_total <- nrow(ngram1)
+bigrams_total <- nrow(ngram2)
+trigrams_total <- nrow(ngram3)
+
+#remove uni-, bi- and tri-gram singletons
+ngram1<-ngram1[!(ngram1$frequency =="1"),]
+ngram2<-ngram2[!(ngram2$frequency =="1"),]
+ngram3<-ngram3[!(ngram3$frequency =="1"),]
+
+#determine remaining number of uni-, bi- and tri-grams
+unigrams_rem <- nrow(ngram1)
+bigrams_rem <- nrow(ngram2)
+trigrams_rem <- nrow(ngram3)
+```
+
+```{r,echo= FALSE, results="asis"}
+table3 <- data.frame(ngram = c("Unigram", "Bigram", "Trigram"), ngramTotal = c(unigrams_total,bigrams_total,trigrams_total), ngramNoSingleton = c(unigrams_rem,bigrams_rem,trigrams_rem))
+table3 %>% kable("html") %>% kable_styling()
+```
+### 5.3 Coverage
+
+```{r, cache=TRUE, echo=FALSE}
+   # How many unique words do you need in a frequency sorted dictionary to cover 50% of all word instances in the language?
+percent_coverage <- .50
+nword <- 0
+coverage<-percent_coverage*sum(ngram1$frequency) # number of words to hit coverage
+for (i in 1:nrow(ngram1))
+{if (nword >= coverage) {return (i)}
+  nword<-nword+ngram1$frequency[i]}
+
+#nrow(ngram1)  #the total number of unique words in the ngram model
+#i #number of unique words required to cover 50% of all word instances
+```
+
+```{r, cache=TRUE, echo=FALSE}
+   #How many unique words do you need in a frequency sorted dictionary to cover 50% of all word instances in the language?
+ percent_coverage <- .90
+nword <- 0
+coverage<-percent_coverage*sum(ngram1$frequency) # number of words to hit coverage
+for (j in 1:nrow(ngram1))
+{if (nword >= coverage) {return (j)}
+  nword<-nword+ngram1$frequency[j]}
+
+#nrow(ngram1)  #the total number of unique words in the ngram model
+#j #number of unique words required to cover 90% of all word instances
+```
+
+```{r, echo = FALSE, cache=TRUE}
+#How many unique words do you need in a frequency sorted dictionary to cover 99% of all word instances in the language?
+percent_coverage <- .99
+nword <- 0
+coverage<-percent_coverage*sum(ngram1$frequency) # number of words to hit coverage
+for (k in 1:nrow(ngram1))
+{if (nword >= coverage) {return (k)}
+  nword<-nword+ngram1$frequency[k]}
+
+#nrow(ngram1)  #the total number of unique words in the ngram model
+#k #number of unique words required to cover 90% of all word instances
+```
+One of the questions in the assignment was to determine how many unique words it would take to cover 50%, 90% and 99% of the dictionary.
+We determined that to cover 50% of the dictionary we need `r i` words, to cover 90% we need `r j` unique words and to cover 99% we need `r k` unique words. 
+```{r,echo= FALSE, results="asis"}
+table2 <- data.frame(PercentageCoverage = c("50%", "90%", "99%"), Uniquewords = c(i,j,k))
+table2 %>% kable("html") %>% kable_styling()
+```
+
+##6. Next
+Develop a word prediction model:
+
+- build a basic n-gram model for predicting the next word based on the previous 1, 2, or 3 words using input from the exploratory analysis performed above.
+
+- build a model that is optimized to run in a minimal amount of memory and takes the least amount of time to make a prediction
+
+- run the model on the shinyapps.io server
+
+I anticipate that getting to the desired results will be an iterative process.
