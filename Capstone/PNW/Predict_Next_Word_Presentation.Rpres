@@ -82,6 +82,8 @@ Introduction
 
 - One can try the prototype at: https://jvanstee.shinyapps.io/predict_next_word2/
 
+- Documentation of the Capstone project can be foud at: https://github.com/jvanstee/Capstone/tree/master/Capstone
+
 How does it work? - Building the language model.
 ========================================================
 
