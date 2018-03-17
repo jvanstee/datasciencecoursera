@@ -10,6 +10,7 @@ number_ngram_models <- length(ngram_models_final)
 
 #Enter the input text, clean it, split the sentence in words and determine the number of words in  the sentence
 
+input_text <- tolower(input_text)
 clean_input_text <- iconv(input_text,"latin1","ASCII",sub="")
 
 input_words <- unlist(strsplit(clean_input_text, split=" "))   #words <- unlist(strsplit(line, split=" "))

@@ -80,7 +80,7 @@ Introduction
 
   - Application memory usage under 10 MB
 
-- One can try the prototype at: https://jvanstee.shinyapps.io/predict_next_word2/
+- One can try the prototype at: https://jvanstee.shinyapps.io/predict_next_word32/
 
 - Documentation of the Capstone project can be foud at: https://github.com/jvanstee/datasciencecoursera/tree/master/Capstone
 

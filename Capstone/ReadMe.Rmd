@@ -20,7 +20,7 @@ output: html_document
 - predictv4.R is the next_word_prediction algorithm
 - data contains the language model, ngram_models.rds
 
-The link to the shiny app: https://jvanstee.shinyapps.io/predict_next_word2/
+The link to the shiny app: https://jvanstee.shinyapps.io/predict_next_word32/
 
 The link to the Rpubs presentation: https://github.com/jvanstee/datasciencecoursera/tree/master/Capstone
 
