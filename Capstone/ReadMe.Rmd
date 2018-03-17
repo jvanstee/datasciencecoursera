@@ -22,5 +22,5 @@ output: html_document
 
 The link to the shiny app: https://jvanstee.shinyapps.io/predict_next_word32/
 
-The link to the Rpubs presentation: https://github.com/jvanstee/datasciencecoursera/tree/master/Capstone
+The link to the Rpubs presentation: http://rpubs.com/jvanstee/370497
 
